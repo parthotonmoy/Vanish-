@@ -1,0 +1,6 @@
+{
+  "name": "Vanish",
+  "description": "Android keyboard privacy veil utility that displays a configurable, translucent dark band over typed text when the keyboard is visible.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,103 @@
+<resources>
+    <string name="app_name">Vanish</string>
+    <string name="accessibility_service_description">Displays a translucent visual band above the on-screen keyboard to reduce typed text visibility to people nearby. Never reads, stores, or transmits typed content.</string>
+
+    <!-- Master Switch & Status -->
+    <string name="master_switch_title">Privacy veil</string>
+    <string name="status_active">Active now (keyboard showing)</string>
+    <string name="status_ready">Ready (keyboard hidden)</string>
+    <string name="status_needs_setup">Needs setup</string>
+    <string name="status_disconnected">Accessibility service disconnected</string>
+    <string name="status_off">Turned off</string>
+    <string name="setup_banner_message">Enable accessibility access to allow Vanish to follow your keyboard.</string>
+    <string name="setup_banner_action">Set up</string>
+
+    <!-- Controls -->
+    <string name="control_opacity_title">Opacity</string>
+    <string name="control_opacity_helper">Higher opacity reduces visibility more, but dims the keys and text you type.</string>
+    <string name="control_coverage_title">Coverage</string>
+    <string name="control_coverage_helper">Portion of the screen above the keyboard covered by the veil.</string>
+    <string name="control_overlap_title">Keyboard overlap</string>
+    <string name="control_overlap_helper">How far the veil reaches into the keyboard. Set to 0% to leave the keyboard completely clear.</string>
+    <string name="preset_compact">Compact</string>
+    <string name="preset_standard">Standard</string>
+    <string name="preset_tall">Full</string>
+    <string name="action_reset">Reset</string>
+
+    <!-- Live Preview -->
+    <string name="preview_title">Live preview</string>
+    <string name="preview_caption">Schematic. Your keyboard layout may differ.</string>
+    <string name="preview_light_keys">Light keys</string>
+    <string name="preview_dark_keys">Dark keys</string>
+    <string name="preview_test_input_placeholder">Type here to test overlay…</string>
+
+    <!-- Permissions and Info Cards -->
+    <string name="section_automatic_activation">Automatic activation</string>
+    <string name="automatic_activation_desc">Vanish activates automatically whenever the on-screen keyboard appears, and dismisses when the keyboard closes.</string>
+    <string name="section_permissions">Permissions and compatibility</string>
+    <string name="permissions_desc">Vanish uses Android’s Accessibility API solely to observe keyboard window bounds. It has no network access and cannot read your typed text.</string>
+    <string name="action_troubleshooting">Troubleshooting and self-check</string>
+
+    <!-- Battery & Reliability -->
+    <string name="section_battery">Battery and reliability</string>
+    <string name="battery_desc">Vanish is strictly event-driven. It uses no background polling loops, no foreground notification, and zero CPU when the keyboard is closed. Some device manufacturers may still stop background services.</string>
+    <string name="action_app_info">Open app settings</string>
+
+    <!-- Developer Section (Exact Prompt Requirement) -->
+    <string name="section_developer">Developer</string>
+    <string name="developer_name_label">Developer</string>
+    <string name="developer_name_value">Mahfuz Alam Tonmoy</string>
+    <string name="developer_university_label">University</string>
+    <string name="developer_university_value">Bangladesh University of Engineering and Technology (BUET)</string>
+
+    <!-- Setup Screen -->
+    <string name="setup_screen_title">Set up Vanish</string>
+    <string name="setup_step1_title">1. Privacy disclosure</string>
+    <string name="setup_step1_desc">Android describes accessibility access as able to observe your actions and retrieve window content. Vanish uses this access strictly to detect when the keyboard window appears and calculate its bounds. Vanish has zero network permissions, stores no logs, and never reads or records your keystrokes, passwords, or screen contents.</string>
+    <string name="setup_step2_title">2. Enable accessibility service</string>
+    <string name="setup_step2_desc">Open system Accessibility settings, find Vanish in installed apps or downloaded services, and switch it on.</string>
+    <string name="setup_step2_restricted_note">If the toggle is greyed out on Android 13 or later for sideloaded apps: Open Settings → Apps → Vanish → tap the top-right three dots → select “Allow restricted settings”, then return here.</string>
+    <string name="setup_action_open_accessibility">Open Accessibility settings</string>
+    <string name="setup_action_open_app_info">Open App Info</string>
+    <string name="setup_step3_title">3. Service status</string>
+    <string name="setup_step3_connected">Service connected and active.</string>
+    <string name="setup_step3_waiting">Waiting for accessibility service to connect…</string>
+    <string name="setup_action_continue">Continue</string>
+    <string name="setup_action_not_now">Not now</string>
+
+    <!-- Troubleshooting Screen -->
+    <string name="troubleshooting_title">Troubleshooting</string>
+    <string name="test_field_title">Interactive test field</string>
+    <string name="test_field_hint">Tap here to bring up your keyboard</string>
+    <string name="test_field_note">Typed text in this field is not stored or logged.</string>
+    <string name="self_check_title">System self-check</string>
+    <string name="check_accessibility_enabled">Accessibility service enabled</string>
+    <string name="check_service_connected">Vanish service process connected</string>
+    <string name="check_ime_detected">Keyboard window detected</string>
+    <string name="check_overlay_ready">Overlay window controller ready</string>
+    <string name="status_pass">Pass</string>
+    <string name="status_warn">Attention</string>
+    <string name="status_fail">Failed</string>
+    <string name="status_idle">Not triggered yet</string>
+
+    <string name="limitations_title">Known limitations</string>
+    <string name="limitations_desc">• Software overlay: reduces visibility from side angles, but does not guarantee privacy against direct view.\n• Vanish does not prevent screenshots, screen recording, or observation by other apps.\n• Does not work on system-protected screens where Android forbids overlays (e.g. permission dialogs).\n• Floating, split, or third-party keyboards that do not report standard window bounds may not trigger the band.</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_theme_title">Appearance theme</string>
+    <string name="theme_system">System</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="settings_dynamic_color_title">Dynamic color</string>
+    <string name="settings_dynamic_color_desc">Derive accent colors from system wallpaper (Android 12+).</string>
+    <string name="settings_reset_appearance_title">Reset appearance</string>
+    <string name="settings_reset_appearance_desc">Restore opacity, coverage, and overlap to default values.</string>
+    <string name="dialog_reset_title">Reset appearance?</string>
+    <string name="dialog_reset_message" formatted="false">This will restore opacity to 55%, coverage to 100%, and keyboard overlap to 0%.</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="app_version_title">App version</string>
+    <string name="app_version_value">1.0 (Stable build)</string>
+
+    <string name="snackbar_reset_done">Appearance restored to default</string>
+</resources>
