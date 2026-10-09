@@ -9,7 +9,7 @@ import com.example.platform.CompatibilityChecker
 import com.example.platform.ServiceStateHolder
 
 class AppContainer(context: Context) {
-    val settingsRepository: SettingsRepository = DataStoreSettingsRepository(context.dataStore)
+    val settingsRepository: SettingsRepository = DataStoreSettingsRepository(context.dataStore, context)
     val serviceStateHolder: ServiceStateHolder = ServiceStateHolder()
     val accessibilityStatusProvider: AccessibilityStatusProvider = AccessibilityStatusProvider(context)
     val compatibilityChecker: CompatibilityChecker = CompatibilityChecker

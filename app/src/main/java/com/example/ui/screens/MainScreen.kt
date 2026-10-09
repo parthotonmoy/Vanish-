@@ -1,8 +1,12 @@
 package com.example.ui.screens
 
+import android.app.StatusBarManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Icon as AndroidIcon
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -31,6 +35,7 @@ import androidx.compose.material.icons.outlined.Keyboard
 import androidx.compose.material.icons.outlined.Opacity
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.SwapVert
+import androidx.compose.material.icons.outlined.Tune
 import androidx.compose.material.icons.outlined.WarningAmber
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -51,6 +56,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.R
 import com.example.domain.VeilSettings
+import com.example.platform.VanishTileService
 import com.example.ui.components.DeveloperSection
 import com.example.ui.components.LivePreview
 import com.example.ui.components.MasterSwitchRow
@@ -395,6 +401,7 @@ private fun InfoSections(
     onOpenAppInfo: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
     val colors = VeilTheme.colors
     val typography = VeilTheme.typography
 
@@ -427,6 +434,71 @@ private fun InfoSections(
                     style = typography.body,
                     color = colors.textSecondary
                 )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        // Quick Settings Tile
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.Top
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.Tune,
+                contentDescription = null,
+                tint = colors.textSecondary,
+                modifier = Modifier.size(24.dp)
+            )
+
+            Spacer(modifier = Modifier.width(12.dp))
+
+            Column {
+                Text(
+                    text = stringResource(R.string.quick_settings_section_title),
+                    style = typography.sectionTitle,
+                    color = colors.textPrimary
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Text(
+                    text = stringResource(R.string.quick_settings_section_desc),
+                    style = typography.body,
+                    color = colors.textSecondary
+                )
+
+                Spacer(modifier = Modifier.height(6.dp))
+
+                Text(
+                    text = stringResource(R.string.quick_settings_guide_steps),
+                    style = typography.label,
+                    color = colors.textSecondary
+                )
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    OutlinedButton(
+                        onClick = {
+                            val sbm = context.getSystemService(StatusBarManager::class.java)
+                            sbm?.requestAddTileService(
+                                ComponentName(context, VanishTileService::class.java),
+                                context.getString(R.string.quick_settings_tile_label),
+                                AndroidIcon.createWithResource(context, R.drawable.ic_quick_settings_tile),
+                                context.mainExecutor,
+                                java.util.function.Consumer<Int> { /* result */ }
+                            )
+                        },
+                        modifier = Modifier.testTag("action_add_qs_tile")
+                    ) {
+                        Text(
+                            text = stringResource(R.string.quick_settings_add_prompt_button),
+                            style = typography.button,
+                            color = colors.accent
+                        )
+                    }
+                }
             }
         }
 

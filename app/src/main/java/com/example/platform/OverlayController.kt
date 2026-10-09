@@ -23,8 +23,8 @@ class OverlayController(
     private var currentAlpha: Float = 0f
     private var isFadingOut: Boolean = false
 
-    // Fast, responsive ease-out curve (Material Decelerate / FastOutSlowIn)
-    private val easeOutInterpolator = PathInterpolator(0f, 0f, 0.2f, 1f)
+    // Fluid, natural cubic bezier curve (standard Material 3 ease-out: begins immediately, decelerates gracefully)
+    private val fluidEaseOut = PathInterpolator(0.2f, 0f, 0f, 1f)
 
     fun applyState(state: OverlayState) {
         when (state) {
@@ -46,7 +46,7 @@ class OverlayController(
         if (currentView != null && isAttached) {
             val params = layoutParams ?: return
 
-            // If the overlay was actively fading out, smoothly reverse the exit transition
+            // Smoothly reverse exit transition if we were actively fading out
             if (isFadingOut) {
                 isFadingOut = false
                 currentView.animate().cancel()
@@ -54,21 +54,27 @@ class OverlayController(
                 val startAlpha = currentView.alpha
                 if (startAlpha < clampedAlpha) {
                     val remainingFraction = ((clampedAlpha - startAlpha) / clampedAlpha).coerceIn(0f, 1f)
-                    val reverseDuration = (150L * remainingFraction).toLong().coerceIn(30L, 150L)
+                    val enterDuration = (140L * remainingFraction).toLong().coerceIn(30L, 140L)
                     currentView.animate()
                         .alpha(clampedAlpha)
-                        .setDuration(reverseDuration)
-                        .setInterpolator(easeOutInterpolator)
+                        .setDuration(enterDuration)
+                        .setInterpolator(fluidEaseOut)
                         .start()
                 } else {
                     currentView.alpha = clampedAlpha
                 }
             } else if (currentAlpha != clampedAlpha) {
-                currentView.alpha = clampedAlpha
+                // Opacity slider adjusted while keyboard is open - transition smoothly
+                currentView.animate().cancel()
+                currentView.animate()
+                    .alpha(clampedAlpha)
+                    .setDuration(100L)
+                    .setInterpolator(fluidEaseOut)
+                    .start()
             }
 
-            val bandChanged = currentBand != band
-            if (bandChanged) {
+            // Only update layout if geometry actually changed (avoids unnecessary IPC)
+            if (currentBand != band) {
                 params.x = band.left
                 params.y = band.top
                 params.width = band.width
@@ -98,7 +104,7 @@ class OverlayController(
                 isClickable = false
                 isFocusable = false
                 importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
-                this.alpha = clampedAlpha
+                this.alpha = 0f // Start transparent for smooth enter fade-in
             }
 
             val params = WindowManager.LayoutParams(
@@ -133,7 +139,15 @@ class OverlayController(
                 layoutParams = params
                 currentBand = band
                 currentAlpha = clampedAlpha
-                Log.d("VanishOverlay", "Overlay window added: band=$band, alpha=$clampedAlpha")
+
+                // Smooth enter fade-in transition
+                view.animate()
+                    .alpha(clampedAlpha)
+                    .setDuration(140L)
+                    .setInterpolator(fluidEaseOut)
+                    .start()
+
+                Log.d("VanishOverlay", "Overlay window added and enter animation started: band=$band, alpha=$clampedAlpha")
             } catch (e: Exception) {
                 Log.e("VanishOverlay", "Failed to add overlay window", e)
             }
@@ -165,14 +179,15 @@ class OverlayController(
         view.animate().cancel()
 
         // Responsive duration of ~150 ms with smooth ease-out curve
-        val duration = (150L * (startAlpha / currentAlpha.coerceAtLeast(0.1f))).toLong().coerceIn(30L, 150L)
+        val baseDuration = 150L
+        val duration = (baseDuration * (startAlpha / currentAlpha.coerceAtLeast(0.1f))).toLong().coerceIn(30L, 160L)
 
         view.animate()
             .alpha(0f)
             .setDuration(duration)
-            .setInterpolator(easeOutInterpolator)
+            .setInterpolator(fluidEaseOut)
             .withEndAction {
-                // Stale callback guard: only remove if still in hiding state and same active view
+                // Stale callback guard: only remove if still in hiding state and matching active view
                 if (isFadingOut && overlayView === view) {
                     removeOverlayImmediate(view)
                 }

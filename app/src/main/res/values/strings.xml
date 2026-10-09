@@ -100,4 +100,15 @@
     <string name="app_version_value">1.0 (Stable build)</string>
 
     <string name="snackbar_reset_done">Appearance restored to default</string>
+
+    <!-- Quick Settings Tile -->
+    <string name="quick_settings_tile_label">Vanish</string>
+    <string name="quick_settings_tile_subtitle_on">Active</string>
+    <string name="quick_settings_tile_subtitle_off">Disabled</string>
+    <string name="quick_settings_tile_desc_active">Vanish privacy veil is active. Tap to turn off.</string>
+    <string name="quick_settings_tile_desc_inactive">Vanish privacy veil is disabled. Tap to turn on.</string>
+    <string name="quick_settings_section_title">Quick Settings tile</string>
+    <string name="quick_settings_section_desc">Toggle Vanish directly from your notification shade control center.</string>
+    <string name="quick_settings_add_prompt_button">Add to Quick Settings</string>
+    <string name="quick_settings_guide_steps">• Swipe down twice from the top of your screen to open Quick Settings.\n• Tap the Edit (pencil) button.\n• Find the Vanish tile and drag it to your active tiles list.</string>
 </resources>

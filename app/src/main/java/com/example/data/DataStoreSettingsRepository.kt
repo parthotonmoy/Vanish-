@@ -19,7 +19,8 @@ import java.io.IOException
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "veil_settings")
 
 class DataStoreSettingsRepository(
-    private val dataStore: DataStore<Preferences>
+    private val dataStore: DataStore<Preferences>,
+    private val context: Context? = null
 ) : SettingsRepository {
 
     private object PreferencesKeys {
@@ -69,6 +70,9 @@ class DataStoreSettingsRepository(
     override suspend fun setEnabled(enabled: Boolean) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.ENABLED] = enabled
+        }
+        context?.let { ctx ->
+            com.example.platform.VanishTileService.requestTileUpdate(ctx)
         }
     }
 

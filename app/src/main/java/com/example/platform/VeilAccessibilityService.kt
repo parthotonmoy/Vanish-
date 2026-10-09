@@ -72,7 +72,7 @@ class VeilAccessibilityService : AccessibilityService() {
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (!currentSettings.enabled) {
-            overlayController?.hide()
+            overlayController?.hide(immediate = true)
             isOverlayShowing = false
             stopWatchdog()
             return
@@ -84,7 +84,7 @@ class VeilAccessibilityService : AccessibilityService() {
 
     override fun onInterrupt() {
         Log.d("VeilService", "Accessibility service interrupted")
-        overlayController?.hide()
+        overlayController?.hide(immediate = true)
         isOverlayShowing = false
         stopWatchdog()
     }
